@@ -1,7 +1,6 @@
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
 import { useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { captureRef } from "react-native-view-shot";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -19,7 +18,7 @@ export default function App() {
         <Text style={styles.message}>
           Precisamos da sua permissão para exibir a câmera.
         </Text>
-        <Button onPress={requestPermission} title="grant permission" />
+        <Button onPress={requestPermission} title="conceder permissão" />
       </View>
     );
   }

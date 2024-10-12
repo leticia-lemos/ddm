@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { Platform, Text, View, StyleSheet } from 'react-native';
-import * as Device from 'expo-device';
-import * as Location from 'expo-location';
-import MapView from 'react-native-maps';
+import * as Location from "expo-location";
+import { useState, useEffect } from "react";
+import { Platform, Text, View, StyleSheet, Button } from "react-native";
+import * as Device from "expo-device";
+import MapView from "react-native-maps";
 
 export default function App() {
   const [location, setLocation] = useState(null);
@@ -15,10 +15,8 @@ export default function App() {
         return;
       }
 
-      let { status: foregroundStatus } = await Location.requestForegroundPermissionsAsync();
-      let { status: backgroundStatus } = await Location.requestBackgroundPermissionsAsync();
-
-      if (foregroundStatus !== 'granted' || backgroundStatus !== 'granted') {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
         setErrorMsg('Permissão para acessar a localização foi negada.');
         return;
       }
@@ -28,7 +26,7 @@ export default function App() {
     })();
   }, []);
 
-  let text = 'Carregando..';
+  let text = 'Carregando...';
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
@@ -68,6 +66,6 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
     width: '100%',
-    height: '80%', // Definindo altura para o mapa
+    height: '80%',
   },
 });
