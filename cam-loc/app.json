@@ -2,7 +2,7 @@
   "expo": {
     "name": "cam-loc",
     "slug": "cam-loc",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -24,7 +24,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/cam-loc.png",
         "backgroundColor": "#ffffff"
       },
       "versionCode": 2,
