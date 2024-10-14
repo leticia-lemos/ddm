@@ -11,7 +11,7 @@ export default function App() {
   useEffect(() => {
     (async () => {
       if (Platform.OS === 'android' && !Device.isDevice) {
-        setErrorMsg('Teste no próprio dispositivo!');
+        setErrorMsg('Testes funcionais no emulador do app Expo go!');
         return;
       }
 
