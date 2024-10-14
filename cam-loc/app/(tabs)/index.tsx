@@ -1,43 +1,64 @@
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
-import { useState } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-
+import * as MediaLibrary from 'expo-media-library';
+import { useState, useRef, useEffect } from "react";
+import { Button, StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function App() {
-  const [facing, setFacing] = useState<CameraType>("back");
-  const [permission, requestPermission] = useCameraPermissions();
+  const [facing, setFacing] = useState<'back' | 'front'>('back');
+  const [cameraPermission, requestCameraPermission] = useCameraPermissions();
+  const [mediaPermission, requestMediaPermission] = MediaLibrary.usePermissions();
+  const [imageUri, setImageUri] = useState(null);
+  const cameraRef = useRef(null);
 
-  if (!permission) {
-    return <View />;
-  }
+  const captureImage = async () => {
+    if (cameraRef.current) {
+      const photo = await cameraRef.current.takePictureAsync({ quality: 1 });
+      setImageUri(photo.uri);
+      await MediaLibrary.createAssetAsync(photo.uri);
+    }
+  };
 
-  if (!permission.granted) {
+  useEffect(() => {
+    (async () => {
+      if (cameraPermission && !cameraPermission.granted) {
+        await requestCameraPermission();
+      }
+      if (mediaPermission && !mediaPermission.granted) {
+        await requestMediaPermission();
+      }
+    })();
+  }, [cameraPermission, mediaPermission]);
+
+  if (!cameraPermission || !mediaPermission) {
     return (
       <View style={styles.container}>
         <Text style={styles.message}>
-          Precisamos da sua permissão para exibir a câmera.
+          Precisamos da sua permissão para acessar a câmera e a biblioteca de mídia.
         </Text>
-        <Button onPress={requestPermission} title="conceder permissão" />
+        <Button onPress={requestCameraPermission} title="Conceder Permissão" />
+        <Button onPress={requestMediaPermission} title="Conceder Permissão" />
       </View>
     );
   }
 
-  function toggleCameraFacing() {
-    setFacing((current) => (current === "back" ? "front" : "back"));
-  }
+  const toggleCameraFacing = () => {
+    setFacing((current) => (current === 'back' ? 'front' : 'back'));
+  };
 
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} facing={facing}>
+      <CameraView style={styles.camera} type={facing} ref={cameraRef}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-            <Text style={styles.group_icons}>
-              <Ionicons name={"sync-sharp"} size={32} style={styles.icon} />
-            </Text>
+            <Ionicons name={"sync-sharp"} size={32} style={styles.icon} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={captureImage}>
+            <Ionicons name={"camera"} size={32} style={styles.captureIcon} />
           </TouchableOpacity>
         </View>
       </CameraView>
+      {imageUri && <Image source={{ uri: imageUri }} style={styles.capturedImage} />}
     </View>
   );
 }
@@ -65,17 +86,16 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     alignItems: "center",
   },
-  text: {
-    fontSize: 18,
-    fontWeight: "bold",
+  captureIcon: {
+    fontSize: 32,
     color: "white",
-  },
-  group_icons: {
-    fontSize: 18,
-    color: "white",
-    flex: 1 / 8,
   },
   icon: {
-    marginLeft: 120,
+    fontSize: 32,
+    color: "white",
+    marginLeft: 10,
+  },
+  capturedImage: {
+    width: '100%',
   },
 });
