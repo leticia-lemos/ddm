@@ -4,7 +4,7 @@ import { Platform, Text, View, StyleSheet, Button } from "react-native";
 import * as Device from "expo-device";
 import MapView from "react-native-maps";
 
-export default function App() {
+export default function App() { 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
