@@ -1,0 +1,45 @@
+{
+  "cli": {
+    "version": ">= 14.0.2",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      },
+      "distribution": "internal"
+    },
+    "preview2": {
+      "android": {
+        "gradleCommand": ":app:assembleRelease"
+      }
+    },
+    "preview3": {
+      "developmentClient": true
+    },
+    "preview4": {
+      "distribution": "internal"
+    },
+    "production": {
+      "autoIncrement": true,
+      "env": {
+        "FIREBASE_API_KEY": "AIzaSyCH66cFSKPBoGlb3HFj6ioDlQLAFEE1bro",
+        "FIREBASE_AUTH_DOMAIN": "chat-firebase-b03e7.firebaseapp.com",
+        "FIREBASE_DATABASE_URL": "https://chat-firebase-b03e7-default-rtdb.firebaseio.com/",
+        "FIREBASE_PROJECT_ID": "chat-firebase-b03e7",
+        "FIREBASE_STORAGE_BUCKET": "chat-firebase-b03e7.firebasestorage.app",
+        "FIREBASE_MESSAGING_SENDER_ID": "530119849526",
+        "FIREBASE_APP_ID": "1:530119849526:web:f54d36e9c896013f808a97",
+        "FIREBASE_MEASUREMENT_ID": "G-M23EEKCEGM"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
