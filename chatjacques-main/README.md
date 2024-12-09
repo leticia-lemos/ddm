@@ -60,4 +60,4 @@ O projeto foi desenvolvido utilizando:
 
 ## Testando o APK
 
-- Link para o APK [Expo](https://expo.dev/client)
+- Link para o [APK]()

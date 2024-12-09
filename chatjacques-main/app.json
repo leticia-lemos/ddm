@@ -19,7 +19,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.leticia_lemos.p.chatApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -32,6 +36,11 @@
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "65aa6127-0f34-4b91-aee3-3dfdacba9615"
+      }
+    }
   }
 }
