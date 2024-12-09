@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, ScrollView, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, ScrollView, View, Image } from 'react-native';
 import EmojiSelector from 'react-native-emoji-selector';
 import Balloon from '../../components/balloon/';
-import { firestore, auth } from '../../firebase';
+import { firestore, auth, storage } from '../../firebase';
 import { doc, setDoc, updateDoc, arrayUnion, onSnapshot, getDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import * as ImagePicker from 'expo-image-picker';
 import { onAuthStateChanged } from 'firebase/auth';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -104,6 +106,51 @@ const Chat = ({ route }) => {
     }
   };
 
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      uploadImage(result.uri);
+    }
+  };
+
+  const uploadImage = async (uri) => {
+    const chatId = [currentUser.uid, user.id].sort().join('_');
+    const chatDoc = doc(firestore, 'chats', chatId);
+
+    try {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+
+      const imageRef = ref(storage, `chatImages/${chatId}/${new Date().getTime()}`);
+      await uploadBytes(imageRef, blob);
+
+      const imageUrl = await getDownloadURL(imageRef);
+
+      const newMessageObj = {
+        id: new Date().getTime().toString(),
+        sentBy: currentUser.uid,
+        content: imageUrl,
+        type: 'image',
+        timestamp: new Date().toISOString(),
+      };
+
+      const chatSnapshot = await getDoc(chatDoc);
+
+      if (!chatSnapshot.exists()) {
+        await setDoc(chatDoc, { users: [currentUser.uid, user.id], messages: [newMessageObj] });
+      } else {
+        await updateDoc(chatDoc, { messages: arrayUnion(newMessageObj) });
+      }
+    } catch (error) {
+      console.error('Erro ao enviar imagem:', error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Chat com {user.name}</Text>
@@ -114,6 +161,9 @@ const Chat = ({ route }) => {
       </ScrollView>
 
       <View style={styles.messageContainer}>
+        <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
+          <Icon name="image" size={24} color="#0c3255" />
+        </TouchableOpacity>
         <TextInput
           style={styles.messageInput}
           value={newMessage}
@@ -162,7 +212,7 @@ const styles = StyleSheet.create({
     padding: 12,
     backgroundColor: '#f1f1f1',
     borderRadius: 8,
-    marginRight: 8,
+    marginHorizontal: 8,
   },
   sendButton: {
     backgroundColor: '#0c3255',
@@ -171,16 +221,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  typingIndicator: {
-    fontStyle: 'italic',
-    color: 'black',
-    marginTop: 10,
-    width: '100%',
-    backgroundColor: 'white',
-    borderRadius: 10,
-    fontSize: 18,
-    padding: 8,
-    flexShrink: 1,
+  imageButton: {
+    padding: 12,
   },
   emojiButton: {
     marginTop: 10,
