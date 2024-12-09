@@ -13,20 +13,18 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.rixzz.chatjacao"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.rixzz.chatjacao"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "owner": "rixzz",
+    "owner": "leticia_lemos.p",
     "plugins": [
       [
         "expo-image-picker",
