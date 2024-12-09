@@ -1,5 +1,7 @@
 # Implementação de Funcionalidades no Aplicativo de Chat
 
+ ## Integrantes: Giovana e Leticia
+
 ## Objetivo
 
 Este projeto tem como objetivo implementar funcionalidades específicas em um aplicativo de chat. A funcionalidade obrigatória, **envio de imagens**, foi parcialmente implementada, enquanto a funcionalidade adicional, **envio de emojis**, foi totalmente concluída para aumentar a interatividade da experiência.
@@ -60,4 +62,4 @@ O projeto foi desenvolvido utilizando:
 
 ## Testando o APK
 
-- Link para o [APK]()
+- Link para o [APK](https://expo.dev/accounts/leticia_lemos.p/projects/chatApp/builds/59d2afd2-9490-4d94-b5a3-58fd2423e140)

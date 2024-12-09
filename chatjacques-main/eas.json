@@ -27,6 +27,9 @@
     },
     "production": {
       "autoIncrement": true,
+      "android": {
+        "buildType": "apk"
+      },
       "env": {
         "FIREBASE_API_KEY": "AIzaSyCH66cFSKPBoGlb3HFj6ioDlQLAFEE1bro",
         "FIREBASE_AUTH_DOMAIN": "chat-firebase-b03e7.firebaseapp.com",
