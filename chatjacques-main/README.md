@@ -43,13 +43,21 @@ O projeto foi desenvolvido utilizando:
 
 - Instalar o [Expo Go](https://expo.dev/client) no dispositivo móvel.
 - Clonar este repositório:
+
   ```
   git clone https://github.com/leticia-lemos/ddm.git
   ```
 
 - Instalar dependências:
-## npm install
-## npm start
+
+```
+npm install
+```
+
+```
+npm start
+```
 
 ## Testando o APK
+
 Link para o APK ().
