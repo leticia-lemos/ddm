@@ -50,14 +50,14 @@ O projeto foi desenvolvido utilizando:
 
 - Instalar dependências:
 
-```
-npm install
-```
+ ```
+ npm install
+ ```
 
-```
-npm start
-```
+ ```
+ npm start
+ ```
 
 ## Testando o APK
 
-Link para o APK ().
+- Link para o APK [Expo](https://expo.dev/client)
