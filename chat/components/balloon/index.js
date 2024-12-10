@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     maxWidth: '80%',
   },
   currentUser: {
-    backgroundColor: '#436a8e', // Verde escuro para o usuário atual
+    backgroundColor: '#436a8e', // Azul escuro para o usuário atual
     alignSelf: 'flex-end',
   },
   otherUser: {
